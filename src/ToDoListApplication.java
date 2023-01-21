@@ -44,7 +44,7 @@ public class ToDoListApplication {
 
 
 
-    /**
+    /*
      * BUSINESS LOGIC
      */
 
@@ -66,22 +66,29 @@ public class ToDoListApplication {
      */
     public static void addTodoList(String todo) {
         // check if the model is full, no index have null value
-        var isfull = true;
-        for (var i = 0; i < model.length; i++) {
-            if (model[i] == null) {
-                isfull = false;
+        var isFull = true;
+//        for (var i = 0; i < model.length; i++) {
+//            if (model[i] == null) {
+//                isFull = false;
+//                break;
+//            }
+//        }
+        for (String s : model) {
+            if (s == null) {
+                isFull = false;
                 break;
             }
         }
 
-        // if isfull is true, resize array 2 times bigger
-        if (isfull) {
+        // if isFull is true, resize array 2 times bigger
+        if (isFull) {
             var temp = model;
             model = new String[model.length * 2];
 
-            for (var i = 0; i < temp.length; i++) {
-                    model[i] = temp[i];
-            }
+//            for (var i = 0; i < temp.length; i++) {
+//                    model[i] = temp[i];
+//            }
+            System.arraycopy(temp, 0, model, 0, temp.length);
         }
 
         // add data where the value is null
@@ -153,23 +160,23 @@ public class ToDoListApplication {
 
     /**
      * INPUT FUNCTION
-     * @param info
      * @return String
      */
     public static String input(String info) {
         System.out.print("\n" + info + ": ");
-        String data = scanner.nextLine();
-        return data;
+        //String data = scanner.nextLine();
+        //return data;
+        return scanner.nextLine();
     }
 
     public static void testInput() {
-        var data = input("nama");
+        var data = input("name");
         System.out.println("Hi " + data);
     }
 
 
 
-    /**
+    /*
      * VIEW
      */
 
@@ -177,6 +184,7 @@ public class ToDoListApplication {
      * Show view todo list
      */
     public static void viewShowTodoList() {
+        label:
         while (true) {
             showTodoList();
 
@@ -186,14 +194,27 @@ public class ToDoListApplication {
             System.out.println("3. Exit");
 
             var menuChosen = input("Choose menu (just type the number of menu)");
-            if (menuChosen.equals("1")) {
-                viewAddTodoList();
-            } else if (menuChosen.equals("2")){
-                viewRemoveTodoList();
-            } else if (menuChosen.equals("3")) {
-                break;
-            } else {
-                System.out.println("\nInput invalid (just type number of menu)\n");
+//            if (menuChosen.equals("1")) {
+//                viewAddTodoList();
+//            } else if (menuChosen.equals("2")){
+//                viewRemoveTodoList();
+//            } else if (menuChosen.equals("3")) {
+//                break;
+//            } else {
+//                System.out.println("\nInput invalid (just type number of menu)\n");
+//            }
+            switch (menuChosen) {
+                case "1":
+                    viewAddTodoList();
+                    break;
+                case "2":
+                    viewRemoveTodoList();
+                    break;
+                case "3":
+                    break label;
+                default:
+                    System.out.println("\nInput invalid (just type number of menu)\n");
+                    break;
             }
         }
     }
